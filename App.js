@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   StyleSheet,
@@ -8,7 +9,6 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-  TouchableHighlight,
 } from "react-native";
 
 const Separator = () => <View style={styles.separator} />;
@@ -29,49 +29,45 @@ const App = () => (
     </TouchableHighlight> */}
     <Separator />
     <View>
-      <Text style={styles.title}>Test Eric Color Different.</Text>
-      <Button
-        style={styles.button}
-        title="Press me"
-        onPress={() => Alert.alert("Button with adjusted color pressed")}
-      />
-    </View>
-    <Separator />
-    <View>
-      <Text style={styles.title}>
-        This layout strategy lets the title define the width of the button.
-      </Text>
+      <Text style={styles.title}>Click left and right buttons below.</Text>
       <View style={styles.fixToText}>
         <Button
-          title="Left button"
+          title="Left"
+          color="blue"
           onPress={() => Alert.alert("Left button pressed")}
         />
         <Button
-          title="Right button"
+          title="Right"
+          color="red"
           onPress={() => Alert.alert("Right button pressed")}
         />
       </View>
     </View>
   </SafeAreaView>
 );
+// lUcYzCjdNAHl34wWvkVD5NFc
+// Il1
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: "#fff",
     display: "flex",
     flexDirection: "vertical",
     justifyContent: "space-around",
     alignItems: "center",
     height: "100%",
     textAlign: "center",
-    marginHorizontal: 16,
+    // marginHorizontal: 16,
   },
   title: {
     textAlign: "center",
     marginVertical: 8,
+    fontFamily: "Arial",
   },
   fixToText: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
   },
   separator: {
     marginVertical: 8,
@@ -79,7 +75,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   button: {
-    color: "orange",
+    backgroundColor: "orange",
   },
   image: {
     resizeMode: "contain",
