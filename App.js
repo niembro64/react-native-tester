@@ -29,6 +29,7 @@ const App = () => (
     </TouchableHighlight> */}
     <Separator />
     <View>
+      <Text style={styles.title}>Niemo App</Text>
       <Text style={styles.title}>Click left and right buttons below.</Text>
       <View style={styles.fixToText}>
         <Button
@@ -53,17 +54,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     display: "flex",
-    flexDirection: "vertical",
     justifyContent: "space-around",
     alignItems: "center",
     height: "100%",
     textAlign: "center",
-    // marginHorizontal: 16,
   },
   title: {
     textAlign: "center",
     marginVertical: 8,
-    fontFamily: "Arial",
   },
   fixToText: {
     flexDirection: "row",
