@@ -10,36 +10,44 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const App = () => (
-  <SafeAreaView style={styles.container}>
-    <Text style={styles.title}>Niemo App</Text>
-    <View style={styles.niemoContainer}>
-      <NiemoComponent myText={"A"}></NiemoComponent>
-      <NiemoComponent myText={"B"}></NiemoComponent>
-      <NiemoComponent myText={"C"}></NiemoComponent>
-      <NiemoComponent myText={"D"}></NiemoComponent>
-      <NiemoComponent myText={"E"}></NiemoComponent>
-    </View>
-    <Separator styel={styles.separator} />
-    <View>
-      {/* <Text style={styles.title}>Click left and right buttons below.</Text> */}
-      <View style={styles.fixToText}>
-        <Button
-          style={styles.button}
-          title="↓ Less"
-          color="blue"
-          onPress={() => Alert.alert("Minus")}
-        />
-        <Button
-          style={styles.button}
-          title="More ↑"
-          color="red"
-          onPress={() => Alert.alert("Plus")}
-        />
+const App = () => {
+  const niemos = [
+    { name: "A" },
+    { name: "B" },
+    { name: "C" },
+    { name: "D" },
+    { name: "E" },
+  ];
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <Text style={styles.title}>Niemo App</Text>
+      <View style={styles.niemoContainer}>
+        {niemos.map((n, k) => {
+          return <NiemoComponent key={k} myText={n.name}></NiemoComponent>;
+        })}
       </View>
-    </View>
-  </SafeAreaView>
-);
+      <Separator styel={styles.separator} />
+      <View>
+        {/* <Text style={styles.title}>Click left and right buttons below.</Text> */}
+        <View style={styles.fixToText}>
+          <Button
+            style={styles.button}
+            title="↓ Less"
+            color="blue"
+            onPress={() => Alert.alert("Minus")}
+          />
+          <Button
+            style={styles.button}
+            title="More ↑"
+            color="red"
+            onPress={() => Alert.alert("Plus")}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
+  );
+};
 
 const Separator = () => <View style={styles.separator} />;
 
