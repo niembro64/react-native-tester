@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   StyleSheet,
@@ -27,7 +26,7 @@ const App = () => (
     {/* <TouchableHighlight onPress={() => Alert.alert("Image Tapped")}>
       <Image style={styles.image} source={require("./assets/mexico.jpg")} />
     </TouchableHighlight> */}
-    <Separator />
+    <Separator styel={styles.separator} />
     <View>
       <Text style={styles.title}>Niemo App</Text>
       <Text style={styles.title}>Click left and right buttons below.</Text>
@@ -46,8 +45,7 @@ const App = () => (
     </View>
   </SafeAreaView>
 );
-// lUcYzCjdNAHl34wWvkVD5NFc
-// Il1
+
 
 const styles = StyleSheet.create({
   container: {
@@ -56,7 +54,7 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    height: "100%",
+    // height: "100%",
     textAlign: "center",
   },
   title: {
@@ -77,10 +75,14 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: "contain",
+    // width: "50%",
+    // height: "50%",
     width: 250,
     height: 250,
-    borderRadius: 10,
+    borderRadius: 20,
     shadowColor: "black",
+    borderWidth: 10,
+    borderColor: "#00000033",
   },
 });
 
