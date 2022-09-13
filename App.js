@@ -12,6 +12,7 @@ import {
 
 const App = () => (
   <SafeAreaView style={styles.container}>
+    <Text style={styles.title}>Niemo App</Text>
     <View style={styles.niemoContainer}>
       <NiemoComponent myText={"A"}></NiemoComponent>
       <NiemoComponent myText={"B"}></NiemoComponent>
@@ -21,18 +22,19 @@ const App = () => (
     </View>
     <Separator styel={styles.separator} />
     <View>
-      <Text style={styles.title}>Niemo App</Text>
-      <Text style={styles.title}>Click left and right buttons below.</Text>
+      {/* <Text style={styles.title}>Click left and right buttons below.</Text> */}
       <View style={styles.fixToText}>
         <Button
-          title="Left"
+          style={styles.button}
+          title="↓ Less"
           color="blue"
-          onPress={() => Alert.alert("You Clicked Left")}
+          onPress={() => Alert.alert("Minus")}
         />
         <Button
-          title="Right"
+          style={styles.button}
+          title="More ↑"
           color="red"
-          onPress={() => Alert.alert("You Clicked Right")}
+          onPress={() => Alert.alert("Plus")}
         />
       </View>
     </View>
@@ -71,6 +73,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   fixToText: {
+    width: 300,
     flexDirection: "row",
     justifyContent: "space-around",
   },
@@ -80,8 +83,11 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   button: {
-    backgroundColor: "orange",
-    marginVertical: 5,
+    fontSize: 10,
+    // width: 70,
+    // height: 70,
+    // backgroundColor: "orange",
+    // marginVertical: 5,
   },
   image: {
     resizeMode: "contain",
