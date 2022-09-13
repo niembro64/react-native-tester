@@ -10,38 +10,15 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-const Separator = () => <View style={styles.separator} />;
-
-const NiemoComponent = (props) => (
-  <SafeAreaView style={styles.container}>
-    <Text style={styles.title}>{props.myText}</Text>
-    <TouchableOpacity
-      onPress={() =>
-        Alert.prompt("My title", "My message", (text) => {
-          Alert.alert(text + props.myText);
-        })
-      }
-    >
-      <Image style={styles.image} source={require("./assets/mexico.jpg")} />
-    </TouchableOpacity>
-  </SafeAreaView>
-);
-
 const App = () => (
   <SafeAreaView style={styles.container}>
-    <NiemoComponent myText={"Test Niemo Text"}></NiemoComponent>
-    <TouchableOpacity
-      onPress={() =>
-        Alert.prompt("My title", "My message", (text) => {
-          Alert.alert(text);
-        })
-      }
-    >
-      <Image style={styles.image} source={require("./assets/mexico.jpg")} />
-    </TouchableOpacity>
-    {/* <TouchableHighlight onPress={() => Alert.alert("Image Tapped")}>
-      <Image style={styles.image} source={require("./assets/mexico.jpg")} />
-    </TouchableHighlight> */}
+    <View style={styles.niemoContainer}>
+      <NiemoComponent myText={"A"}></NiemoComponent>
+      <NiemoComponent myText={"B"}></NiemoComponent>
+      <NiemoComponent myText={"C"}></NiemoComponent>
+      <NiemoComponent myText={"D"}></NiemoComponent>
+      <NiemoComponent myText={"E"}></NiemoComponent>
+    </View>
     <Separator styel={styles.separator} />
     <View>
       <Text style={styles.title}>Niemo App</Text>
@@ -62,6 +39,23 @@ const App = () => (
   </SafeAreaView>
 );
 
+const Separator = () => <View style={styles.separator} />;
+
+const NiemoComponent = (props) => (
+  <SafeAreaView style={styles.niemo}>
+    <Text style={styles.title}>{props.myText}</Text>
+    <TouchableOpacity
+      onPress={() =>
+        Alert.prompt("My title", "My message", (text) => {
+          Alert.alert(text + props.myText);
+        })
+      }
+    >
+      <Image style={styles.image} source={require("./assets/mexico.jpg")} />
+    </TouchableOpacity>
+  </SafeAreaView>
+);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -69,35 +63,54 @@ const styles = StyleSheet.create({
     display: "flex",
     justifyContent: "space-around",
     alignItems: "center",
-    // height: "100%",
     textAlign: "center",
+    marginVertical: 5,
   },
   title: {
     textAlign: "center",
-    marginVertical: 8,
+    marginVertical: 5,
   },
   fixToText: {
     flexDirection: "row",
     justifyContent: "space-around",
   },
   separator: {
-    marginVertical: 8,
     borderBottomColor: "#737373",
     borderBottomWidth: StyleSheet.hairlineWidth,
+    marginVertical: 5,
   },
   button: {
     backgroundColor: "orange",
+    marginVertical: 5,
   },
   image: {
     resizeMode: "contain",
-    // width: "50%",
-    // height: "50%",
-    width: 150,
-    height: 150,
-    borderRadius: 20,
-    shadowColor: "black",
+    width: 70,
+    height: 70,
     borderWidth: 10,
     borderColor: "#00000033",
+    borderRadius: 20,
+    marginVertical: 5,
+  },
+  niemoContainer: {
+    borderWidth: 10,
+    borderColor: "#00000033",
+    borderRadius: 20,
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+  },
+  niemo: {
+    borderWidth: 10,
+    borderColor: "#00000033",
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
+    marginVertical: 5,
   },
 });
 
