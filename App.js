@@ -9,13 +9,16 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+// import axios from "axios";
+// const baseUrl = "https://reqres.in";
 
 const App = () => {
+  const [fetchData, setFetchData] = useState({});
   const [niemosIterator, setNiemosIterator] = useState(68);
   const [niemos, setNiemos] = useState([
-    { name: "A" },
-    { name: "B" },
-    { name: "C" },
+    { name: "A", fact: "Fact A" },
+    { name: "B", fact: "Fact B" },
+    { name: "C", fact: "Fact C" },
   ]);
 
   const onClickHandlerLess = () => {
@@ -23,35 +26,73 @@ const App = () => {
     setNiemosIterator(niemosIterator - 1 < 65 ? 65 : niemosIterator - 1);
   };
   const onClickHandlerMore = () => {
-    setNiemos([...niemos, { name: String.fromCharCode(niemosIterator) }]);
-    setNiemosIterator(niemosIterator + 1);
+    goForFetch();
   };
+
+  goForFetch = () => {
+    setFetchData({
+      fromFetch: true,
+      loading: true,
+    });
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    fetch("https://catfact.ninja/fact")
+      .then((response) => response.json())
+      .then((responseJson) => {
+        console.log("getting data from fetch", responseJson);
+        setFetchData(responseJson);
+        // setTimeout(() => {}, 2000);
+        setNiemos([
+          ...niemos,
+          { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
+        ]);
+        setNiemosIterator(niemosIterator + 1);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  // Passing configuration object to axios
+  // axios({
+  //   method: "get",
+  //   url: `${baseUrl}/api/users/1`,
+  // }).then((response) => {
+  //   console.log(response.data);
+  // });
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Niemo App</Text>
       <View style={styles.niemoContainer}>
         {niemos.map((n, k) => {
-          return <NiemoComponent key={k} myText={n.name}></NiemoComponent>;
+          return (
+            <NiemoComponent
+              key={k}
+              myText={n.name}
+              myFact={n.fact}
+            ></NiemoComponent>
+          );
         })}
       </View>
       <Separator styel={styles.separator} />
       <View>
         <View style={styles.buttons}>
-          <Button
-            style={styles.button}
-            title="↓ Less"
+          <TouchableOpacity
+            style={styles.buttonLeft}
+            title="▼"
             color="blue"
             onPress={onClickHandlerLess}
             // onPress={() => Alert.alert("Minus")}
-          />
-          <Button
-            style={styles.button}
-            title="More ↑"
+          >
+            <Text style={styles.text}>▼</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonRight}
+            title="▲"
             color="red"
             onPress={onClickHandlerMore}
             // onPress={() => Alert.alert("Plus")}
-          />
+          >
+            <Text style={styles.text}>▲</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
@@ -62,7 +103,6 @@ const Separator = () => <View style={styles.separator} />;
 
 const NiemoComponent = (props) => (
   <SafeAreaView style={styles.niemo}>
-    <Text style={styles.title}>{props.myText}</Text>
     <TouchableOpacity
       onPress={() =>
         Alert.prompt("New Title:", "", (text) => {
@@ -72,6 +112,8 @@ const NiemoComponent = (props) => (
     >
       <Image style={styles.image} source={require("./assets/mexico.jpg")} />
     </TouchableOpacity>
+    <Text style={styles.title}>{props.myText}</Text>
+    <Text style={styles.subTitle}>{props.myFact}</Text>
   </SafeAreaView>
 );
 
@@ -87,7 +129,17 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
+    fontSize: 30,
+    marginVertical: 5,
+  },
+  subTitle: {
+    textAlign: "center",
     fontSize: 10,
+    marginVertical: 5,
+  },
+  text: {
+    textAlign: "center",
+    fontSize: 20,
     marginVertical: 5,
   },
   buttons: {
@@ -95,9 +147,9 @@ const styles = StyleSheet.create({
     // left: 0,
     // right: 0,
     // bottom: 0,
-    width: 200,
+    width: 350,
     padding: 5,
-    borderWidth: 10,
+    borderWidth: 0,
     borderColor: "#00000033",
     borderRadius: 20,
     flexDirection: "row",
@@ -108,8 +160,24 @@ const styles = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     marginVertical: 5,
   },
-  button: {
-    fontSize: 10,
+  buttonLeft: {
+    fontWeight: "bold",
+    borderWidth: 10,
+    borderColor: "#0000ff",
+    color: "#0000ff",
+    backgroundColor: "#0000ff77",
+    borderRadius: 20,
+    paddingHorizontal: 60,
+    paddingVertical: 10,
+  },
+  buttonRight: {
+    fontWeight: "bold",
+    borderWidth: 10,
+    borderColor: "#ff0000",
+    backgroundColor: "#ff000077",
+    borderRadius: 20,
+    paddingHorizontal: 60,
+    paddingVertical: 10,
   },
   image: {
     resizeMode: "contain",
@@ -121,7 +189,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   niemoContainer: {
-    borderWidth: 10,
+    borderWidth: 0,
     borderColor: "#00000033",
     borderRadius: 20,
     flexDirection: "row",
@@ -131,8 +199,15 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   niemo: {
-    borderWidth: 10,
-    borderColor: "#00000033",
+    borderWidth: 3,
+    margin: 5,
+    padding: 10,
+    // paddingTop: 5,
+    // paddingBottom: 5,
+    // paddingRight: 5,
+    // paddingLeft: 5,
+    borderColor: "#00ff00",
+    backgroundColor: "#00ff0033",
     borderRadius: 20,
     display: "flex",
     justifyContent: "center",
