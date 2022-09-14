@@ -11,18 +11,16 @@ import {
 } from "react-native";
 
 const App = () => {
-  const [niemosIterator, setNiemosIterator] = useState(0);
+  const [niemosIterator, setNiemosIterator] = useState(65);
   const [niemos, setNiemos] = useState([]);
 
   const onClickHandlerLess = () => {
     niemos.pop();
     setNiemosIterator(niemosIterator - 1);
-    console.log("NIEMOS", niemos);
   };
   const onClickHandlerMore = () => {
-    setNiemos([...niemos, { name: niemosIterator }]);
+    setNiemos([...niemos, { name: String.fromCharCode(niemosIterator) }]);
     setNiemosIterator(niemosIterator + 1);
-    console.log("NIEMOS", niemos);
   };
 
   return (
