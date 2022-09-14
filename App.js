@@ -41,6 +41,8 @@ const App = () => {
         console.log("getting data from fetch", responseJson);
         setFetchData(responseJson);
         // setTimeout(() => {}, 2000);
+      })
+      .then(() => {
         setNiemos([
           ...niemos,
           { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
@@ -112,7 +114,7 @@ const NiemoComponent = (props) => (
     >
       <Image style={styles.image} source={require("./assets/mexico.jpg")} />
     </TouchableOpacity>
-    <Text style={styles.title}>{props.myText}</Text>
+    <Text style={styles.subTitle}>{props.myText}</Text>
     <Text style={styles.subTitle}>{props.myFact}</Text>
   </SafeAreaView>
 );
