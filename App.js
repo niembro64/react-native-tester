@@ -11,12 +11,16 @@ import {
 } from "react-native";
 
 const App = () => {
-  const [niemosIterator, setNiemosIterator] = useState(65);
-  const [niemos, setNiemos] = useState([]);
+  const [niemosIterator, setNiemosIterator] = useState(68);
+  const [niemos, setNiemos] = useState([
+    { name: "A" },
+    { name: "B" },
+    { name: "C" },
+  ]);
 
   const onClickHandlerLess = () => {
     niemos.pop();
-    setNiemosIterator(niemosIterator - 1);
+    setNiemosIterator(niemosIterator - 1 < 65 ? 65 : niemosIterator - 1);
   };
   const onClickHandlerMore = () => {
     setNiemos([...niemos, { name: String.fromCharCode(niemosIterator) }]);
@@ -33,7 +37,7 @@ const App = () => {
       </View>
       <Separator styel={styles.separator} />
       <View>
-        <View style={styles.fixToText}>
+        <View style={styles.buttons}>
           <Button
             style={styles.button}
             title="↓ Less"
@@ -76,19 +80,28 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     display: "flex",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     alignItems: "center",
     textAlign: "center",
     marginVertical: 5,
   },
   title: {
     textAlign: "center",
+    fontSize: 10,
     marginVertical: 5,
   },
-  fixToText: {
-    width: 300,
+  buttons: {
+    // position: "absolute",
+    // left: 0,
+    // right: 0,
+    // bottom: 0,
+    width: 200,
+    padding: 5,
+    borderWidth: 10,
+    borderColor: "#00000033",
+    borderRadius: 20,
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
   },
   separator: {
     borderBottomColor: "#737373",
@@ -97,10 +110,6 @@ const styles = StyleSheet.create({
   },
   button: {
     fontSize: 10,
-    // width: 70,
-    // height: 70,
-    // backgroundColor: "orange",
-    // marginVertical: 5,
   },
   image: {
     resizeMode: "contain",
