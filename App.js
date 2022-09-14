@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
   Button,
@@ -11,13 +11,19 @@ import {
 } from "react-native";
 
 const App = () => {
-  const niemos = [
-    { name: "A" },
-    { name: "B" },
-    { name: "C" },
-    { name: "D" },
-    { name: "E" },
-  ];
+  const [niemosIterator, setNiemosIterator] = useState(0);
+  const [niemos, setNiemos] = useState([]);
+
+  const onClickHandlerLess = () => {
+    niemos.pop();
+    setNiemosIterator(niemosIterator - 1);
+    console.log("NIEMOS", niemos);
+  };
+  const onClickHandlerMore = () => {
+    setNiemos([...niemos, { name: niemosIterator }]);
+    setNiemosIterator(niemosIterator + 1);
+    console.log("NIEMOS", niemos);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,19 +35,20 @@ const App = () => {
       </View>
       <Separator styel={styles.separator} />
       <View>
-        {/* <Text style={styles.title}>Click left and right buttons below.</Text> */}
         <View style={styles.fixToText}>
           <Button
             style={styles.button}
             title="↓ Less"
             color="blue"
-            onPress={() => Alert.alert("Minus")}
+            onPress={onClickHandlerLess}
+            // onPress={() => Alert.alert("Minus")}
           />
           <Button
             style={styles.button}
             title="More ↑"
             color="red"
-            onPress={() => Alert.alert("Plus")}
+            onPress={onClickHandlerMore}
+            // onPress={() => Alert.alert("Plus")}
           />
         </View>
       </View>
@@ -56,7 +63,7 @@ const NiemoComponent = (props) => (
     <Text style={styles.title}>{props.myText}</Text>
     <TouchableOpacity
       onPress={() =>
-        Alert.prompt("My title", "My message", (text) => {
+        Alert.prompt("New Title:", "", (text) => {
           Alert.alert(text + props.myText);
         })
       }
