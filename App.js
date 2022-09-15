@@ -11,7 +11,6 @@ import {
 } from "react-native";
 
 const App = () => {
-  // const [fetchData, setFetchData] = useState({});
   const [niemosIterator, setNiemosIterator] = useState(68);
   const [niemos, setNiemos] = useState([
     { name: "A", fact: "Fact A", factShort: "Fact A ..." },
@@ -19,20 +18,12 @@ const App = () => {
     { name: "C", fact: "Fact C", factShort: "Fact C ..." },
   ]);
 
-  // useEffect(() => {
-  //   setNiemos([
-  //     ...niemos,
-  //     { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
-  //   ]);
-  //   setNiemosIterator(niemosIterator + 1);
-  // }, [fetchData]);
-
-  const onClickHandlerLess = () => {
+  const onClickLess = () => {
     niemos.pop();
     setNiemosIterator(niemosIterator - 1 < 65 ? 65 : niemosIterator - 1);
   };
 
-  const onClickHandlerMore = () => {
+  const onClickMore = () => {
     goForFetch();
   };
 
@@ -52,8 +43,25 @@ const App = () => {
         ]);
         setNiemosIterator(niemosIterator + 1);
       })
-      .then(() => {})
       .catch((error) => console.log(error));
+  };
+
+  const onClickNiemo = (k) => {
+    // Alert.prompt("New Title:", "", (text) => {
+    //   niemos[k].name = text;
+    //   setNiemos([...niemos]);
+    // });
+
+    Alert.prompt("New Title:", "", [
+      { text: "Cancel", onPress: () => {} },
+      {
+        text: "Change",
+        onPress: (text) => {
+          niemos[k].name = text;
+          setNiemos([...niemos]);
+        },
+      },
+    ]);
   };
 
   return (
@@ -66,13 +74,16 @@ const App = () => {
           return (
             <TouchableOpacity
               key={k}
-              onPress={() =>
-                Alert.prompt("New Title:", "", (text) => {
-                  niemos[k].name = text;
-                  setNiemos([...niemos]);
-                  // Alert.alert(text);
-                })
-              }
+              onPress={() => {
+                onClickNiemo(k);
+              }}
+              // onPress={() =>
+              //   Alert.prompt("New Title:", "", (text) => {
+              //     niemos[k].name = text;
+              //     setNiemos([...niemos]);
+              //     // Alert.alert(text);
+              //   })
+              // }
             >
               <NiemoComponent
                 key={k}
@@ -89,7 +100,7 @@ const App = () => {
         <View style={styles.buttons}>
           <TouchableOpacity
             style={[styles.button, styles.buttonLeft]}
-            onPress={onClickHandlerLess}
+            onPress={onClickLess}
           >
             <Text style={[styles.text, styles.textMedium, styles.textWhite]}>
               ▼
@@ -97,7 +108,7 @@ const App = () => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.button, styles.buttonRight]}
-            onPress={onClickHandlerMore}
+            onPress={onClickMore}
           >
             <Text style={[styles.text, styles.textMedium, styles.textWhite]}>
               ▲
@@ -117,16 +128,6 @@ const NiemoComponent = (props) => (
     <Text style={[styles.subTitle, styles.textMedium, styles.textWhite]}>
       {props.myText}
     </Text>
-    {/* <Text
-      style={[
-        styles.subTitle,
-        styles.textSmall,
-        styles.textWhite,
-        styles.niemoText,
-      ]}
-    >
-      {props.myFact}
-    </Text> */}
     <Text
       style={[
         styles.subTitle,
