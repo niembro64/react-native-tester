@@ -52,13 +52,21 @@ const App = () => {
     //   setNiemos([...niemos]);
     // });
 
-    Alert.prompt("New Title:", "", [
-      { text: "Cancel", onPress: () => {} },
+    Alert.prompt(niemos[k].name, "New Title:", [
+      // {
+      //   text: "⟳ Clear",
+      //   onPress: () => {
+      //     onClickNiemo(k);
+      //   },
+      // },
+      { text: "✖", onPress: () => {} },
       {
-        text: "Change",
+        text: "✔",
         onPress: (text) => {
-          niemos[k].name = text;
-          setNiemos([...niemos]);
+          if (text) {
+            niemos[k].name = text;
+            setNiemos([...niemos]);
+          }
         },
       },
     ]);
