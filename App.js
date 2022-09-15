@@ -11,13 +11,21 @@ import {
 } from "react-native";
 
 const App = () => {
-  const [fetchData, setFetchData] = useState({});
+  const [fetchData, setFetchData] = useState({ name: "D", fact: "Fact D" });
   const [niemosIterator, setNiemosIterator] = useState(68);
   const [niemos, setNiemos] = useState([
     { name: "A", fact: "Fact A" },
     { name: "B", fact: "Fact B" },
     { name: "C", fact: "Fact C" },
   ]);
+
+  useEffect(() => {
+    setNiemos([
+      ...niemos,
+      { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
+    ]);
+    setNiemosIterator(niemosIterator + 1);
+  }, [fetchData]);
 
   const onClickHandlerLess = () => {
     niemos.pop();
@@ -38,21 +46,22 @@ const App = () => {
       .then((responseJson) => {
         console.log("getting data from fetch", responseJson);
         setFetchData(responseJson);
-        // setTimeout(() => {}, 2000);
       })
       .then(() => {
-        setNiemos([
-          ...niemos,
-          { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
-        ]);
-        setNiemosIterator(niemosIterator + 1);
+        // setNiemos([
+        //   ...niemos,
+        //   { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
+        // ]);
+        // setNiemosIterator(niemosIterator + 1);
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Niemo App</Text>
+      <Text style={[styles.title, styles.textBig, styles.textWhite]}>
+        Niemo App
+      </Text>
       <View style={styles.niemoContainer}>
         {niemos.map((n, k) => {
           return (
@@ -68,22 +77,20 @@ const App = () => {
       <View>
         <View style={styles.buttons}>
           <TouchableOpacity
-            style={styles.buttonLeft}
-            title="▼"
-            color="blue"
+            style={[styles.button, styles.buttonLeft]}
             onPress={onClickHandlerLess}
-            // onPress={() => Alert.alert("Minus")}
           >
-            <Text style={styles.text}>▼</Text>
+            <Text style={[styles.text, styles.textMedium, styles.textWhite]}>
+              ▼
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={styles.buttonRight}
-            title="▲"
-            color="red"
+            style={[styles.button, styles.buttonRight]}
             onPress={onClickHandlerMore}
-            // onPress={() => Alert.alert("Plus")}
           >
-            <Text style={styles.text}>▲</Text>
+            <Text style={[styles.text, styles.textMedium, styles.textWhite]}>
+              ▲
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -104,15 +111,20 @@ const NiemoComponent = (props) => (
     >
       <Image style={styles.image} source={require("./assets/mexico.jpg")} />
     </TouchableOpacity>
-    <Text style={styles.subTitle}>{props.myText}</Text>
-    <Text style={styles.subTitle}>{props.myFact}</Text>
+    <Text style={[styles.subTitle, styles.textMedium, styles.textWhite]}>
+      {props.myText}
+    </Text>
+    <Text style={[styles.subTitle, styles.textSmall, styles.textWhite]}>
+      {props.myFact}
+    </Text>
   </SafeAreaView>
 );
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+    // flex: 1,
+    height: "100%",
+    backgroundColor: "#123",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -121,28 +133,44 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
-    fontSize: 30,
     marginVertical: 5,
   },
   subTitle: {
     textAlign: "center",
-    fontSize: 10,
     marginVertical: 5,
   },
   text: {
     textAlign: "center",
-    fontSize: 20,
     marginVertical: 5,
     color: "#000000",
+  },
+  textBig: {
+    fontSize: 35,
+  },
+  textMedium: {
+    fontSize: 25,
+  },
+  textSmall: {
+    fontSize: 15,
+  },
+  textWhite: {
+    color: "#fff",
   },
   buttons: {
     width: 350,
     padding: 5,
     borderWidth: 0,
     borderColor: "#00000033",
-    borderRadius: 20,
+    borderRadius: 40,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  button: {
+    fontWeight: "bold",
+    // borderWidth: 5,
+    borderRadius: 40,
+    paddingHorizontal: 60,
+    paddingVertical: 10,
   },
   separator: {
     borderBottomColor: "#737373",
@@ -150,37 +178,27 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   buttonLeft: {
-    fontWeight: "bold",
-    borderWidth: 10,
-    borderColor: "#000099",
-    color: "#000099",
+    // borderColor: "#000099",
     backgroundColor: "#555599",
-    borderRadius: 20,
-    paddingHorizontal: 60,
-    paddingVertical: 10,
   },
   buttonRight: {
-    fontWeight: "bold",
-    borderWidth: 10,
-    borderColor: "#990000",
+    // borderColor: "#990000",
     backgroundColor: "#995555",
-    borderRadius: 20,
-    paddingHorizontal: 60,
-    paddingVertical: 10,
   },
   image: {
     resizeMode: "contain",
     width: 70,
     height: 70,
-    borderWidth: 10,
-    borderColor: "#00000033",
-    borderRadius: 20,
-    marginVertical: 5,
+    // borderWidth: 10,
+    // borderColor: "#00000033",
+    borderRadius: 40,
+    // marginVertical: 5,
+    margin: 10,
   },
   niemoContainer: {
     borderWidth: 0,
     borderColor: "#00000033",
-    borderRadius: 20,
+    borderRadius: 40,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -188,11 +206,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   niemo: {
-    borderWidth: 3,
+    // borderWidth: 3,
+    // borderColor: "#009900",
+    backgroundColor: "#114433",
     margin: 5,
-    padding: 10,
-    borderColor: "#00ff00",
-    backgroundColor: "#00ff0033",
+    // padding: 10,
     borderRadius: 20,
     display: "flex",
     justifyContent: "center",
