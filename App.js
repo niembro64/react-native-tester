@@ -1,13 +1,15 @@
 import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
-  Button,
   View,
   SafeAreaView,
-  Text,
   Alert,
   Image,
   TouchableOpacity,
+  Animated,
+  Text,
+  Dimensions,
+  Button,
 } from "react-native";
 
 const App = () => {
@@ -47,18 +49,7 @@ const App = () => {
   };
 
   const onClickNiemo = (k) => {
-    // Alert.prompt("New Title:", "", (text) => {
-    //   niemos[k].name = text;
-    //   setNiemos([...niemos]);
-    // });
-
     Alert.prompt(niemos[k].name, "New Title:", [
-      // {
-      //   text: "⟳ Clear",
-      //   onPress: () => {
-      //     onClickNiemo(k);
-      //   },
-      // },
       { text: "✖", onPress: () => {} },
       {
         text: "✔",
@@ -72,8 +63,24 @@ const App = () => {
     ]);
   };
 
+  myFadeInView = new FadeInView();
+
   return (
     <SafeAreaView style={styles.container}>
+      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+        <FadeInView
+          style={{ backgroundColor: "powderblue" }}
+          ref={(ani) => (myFadeInView.fade = ani)}
+        >
+          <Text style={{ fontSize: 28, textAlign: "center", margin: 10 }}>
+            Fading in
+          </Text>
+        </FadeInView>
+        <Button
+          title="go animate"
+          onPress={() => myFadeInView.animatebutton()}
+        />
+      </View>
       <Text style={[styles.title, styles.textBig, styles.textWhite]}>
         Niemo's Cat Facts
       </Text>
@@ -85,13 +92,6 @@ const App = () => {
               onPress={() => {
                 onClickNiemo(k);
               }}
-              // onPress={() =>
-              //   Alert.prompt("New Title:", "", (text) => {
-              //     niemos[k].name = text;
-              //     setNiemos([...niemos]);
-              //     // Alert.alert(text);
-              //   })
-              // }
             >
               <NiemoComponent
                 key={k}
@@ -258,5 +258,53 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
+
+const screenwidth = Dimensions.get("screen").width;
+const screenheight = Dimensions.get("screen").height;
+class FadeInView extends React.Component {
+  state = {
+    fadeAnim: new Animated.Value(50), // Initial value for opacity: 0
+    fadeAnim2: new Animated.Value(50),
+  };
+
+  componentDidMount() {}
+
+  animatebutton() {
+    Animated.timing(
+      // Animate over time
+      this.state.fadeAnim, // The animated value to drive
+      {
+        toValue: screenheight, // Animate to opacity: 1 (opaque)
+        duration: 10000, // Make it take a while
+        useNativeDriver: true, // <-- Add this
+      }
+    ).start();
+    Animated.timing(
+      // Animate over time
+      this.state.fadeAnim2, // The animated value to drive
+      {
+        toValue: screenwidth, // Animate to opacity: 1 (opaque)
+        duration: 10000, // Make it take a while
+        useNativeDriver: true, // <-- Add this
+      }
+    ).start(); // Starts the animation
+  }
+
+  render() {
+    let { fadeAnim, fadeAnim2 } = this.state;
+
+    return (
+      <Animated.View // Special animatable View
+        style={{
+          ...this.props.style,
+          height: fadeAnim,
+          width: fadeAnim2, // Bind opacity to animated value
+        }}
+      >
+        {this.props.children}
+      </Animated.View>
+    );
+  }
+}
 
 export default App;
