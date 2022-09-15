@@ -11,21 +11,21 @@ import {
 } from "react-native";
 
 const App = () => {
-  const [fetchData, setFetchData] = useState({ name: "D", fact: "Fact D" });
+  // const [fetchData, setFetchData] = useState({});
   const [niemosIterator, setNiemosIterator] = useState(68);
   const [niemos, setNiemos] = useState([
-    { name: "A", fact: "Fact A" },
-    { name: "B", fact: "Fact B" },
-    { name: "C", fact: "Fact C" },
+    { name: "A", fact: "Fact A", factShort: "FAS" },
+    { name: "B", fact: "Fact B", factShort: "FBS" },
+    { name: "C", fact: "Fact C", factShort: "FCS" },
   ]);
 
-  useEffect(() => {
-    setNiemos([
-      ...niemos,
-      { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
-    ]);
-    setNiemosIterator(niemosIterator + 1);
-  }, [fetchData]);
+  // useEffect(() => {
+  //   setNiemos([
+  //     ...niemos,
+  //     { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
+  //   ]);
+  //   setNiemosIterator(niemosIterator + 1);
+  // }, [fetchData]);
 
   const onClickHandlerLess = () => {
     niemos.pop();
@@ -37,30 +37,29 @@ const App = () => {
   };
 
   const goForFetch = () => {
-    setFetchData({
-      fromFetch: true,
-      loading: true,
-    });
     fetch("https://catfact.ninja/fact")
       .then((response) => response.json())
       .then((responseJson) => {
         console.log("getting data from fetch", responseJson);
-        setFetchData(responseJson);
+        // setFetchData(responseJson);
+        setNiemos([
+          ...niemos,
+          {
+            name: String.fromCharCode(niemosIterator),
+            fact: responseJson.fact,
+            factShort: responseJson.fact.substr(0, 30) + " ...",
+          },
+        ]);
+        setNiemosIterator(niemosIterator + 1);
       })
-      .then(() => {
-        // setNiemos([
-        //   ...niemos,
-        //   { name: String.fromCharCode(niemosIterator), fact: fetchData.fact },
-        // ]);
-        // setNiemosIterator(niemosIterator + 1);
-      })
+      .then(() => {})
       .catch((error) => console.log(error));
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={[styles.title, styles.textBig, styles.textWhite]}>
-        Niemo App
+        Niemo's Cat Facts
       </Text>
       <View style={styles.niemoContainer}>
         {niemos.map((n, k) => {
@@ -69,6 +68,7 @@ const App = () => {
               key={k}
               myText={n.name}
               myFact={n.fact}
+              myFactShort={n.factShort}
             ></NiemoComponent>
           );
         })}
@@ -114,8 +114,25 @@ const NiemoComponent = (props) => (
     <Text style={[styles.subTitle, styles.textMedium, styles.textWhite]}>
       {props.myText}
     </Text>
-    <Text style={[styles.subTitle, styles.textSmall, styles.textWhite]}>
+    {/* <Text
+      style={[
+        styles.subTitle,
+        styles.textSmall,
+        styles.textWhite,
+        styles.niemoText,
+      ]}
+    >
       {props.myFact}
+    </Text> */}
+    <Text
+      style={[
+        styles.subTitle,
+        styles.textSmall,
+        styles.textWhite,
+        styles.niemoText,
+      ]}
+    >
+      {props.myFactShort}
     </Text>
   </SafeAreaView>
 );
@@ -197,8 +214,8 @@ const styles = StyleSheet.create({
   },
   niemoContainer: {
     borderWidth: 0,
-    borderColor: "#00000033",
-    borderRadius: 40,
+    // backgroundColor: "#555",
+    borderRadius: 10,
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
@@ -209,6 +226,7 @@ const styles = StyleSheet.create({
     // borderWidth: 3,
     // borderColor: "#009900",
     backgroundColor: "#114433",
+    maxWidth: 150,
     margin: 5,
     // padding: 10,
     borderRadius: 20,
@@ -217,6 +235,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     textAlign: "center",
     marginVertical: 5,
+  },
+  niemoText: {
+    maxWidth: 100,
+    margin: 5,
+    borderRadius: 20,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
   },
 });
 
