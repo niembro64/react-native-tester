@@ -14,9 +14,9 @@ const App = () => {
   // const [fetchData, setFetchData] = useState({});
   const [niemosIterator, setNiemosIterator] = useState(68);
   const [niemos, setNiemos] = useState([
-    { name: "A", fact: "Fact A", factShort: "FAS" },
-    { name: "B", fact: "Fact B", factShort: "FBS" },
-    { name: "C", fact: "Fact C", factShort: "FCS" },
+    { name: "A", fact: "Fact A", factShort: "Fact A ..." },
+    { name: "B", fact: "Fact B", factShort: "Fact B ..." },
+    { name: "C", fact: "Fact C", factShort: "Fact C ..." },
   ]);
 
   // useEffect(() => {
@@ -40,7 +40,7 @@ const App = () => {
     fetch("https://catfact.ninja/fact")
       .then((response) => response.json())
       .then((responseJson) => {
-        console.log("getting data from fetch", responseJson);
+        // console.log("getting data from fetch", responseJson);
         // setFetchData(responseJson);
         setNiemos([
           ...niemos,
@@ -64,12 +64,23 @@ const App = () => {
       <View style={styles.niemoContainer}>
         {niemos.map((n, k) => {
           return (
-            <NiemoComponent
+            <TouchableOpacity
               key={k}
-              myText={n.name}
-              myFact={n.fact}
-              myFactShort={n.factShort}
-            ></NiemoComponent>
+              onPress={() =>
+                Alert.prompt("New Title:", "", (text) => {
+                  niemos[k].name = text;
+                  setNiemos([...niemos]);
+                  // Alert.alert(text);
+                })
+              }
+            >
+              <NiemoComponent
+                key={k}
+                myText={n.name}
+                myFact={n.fact}
+                myFactShort={n.factShort}
+              ></NiemoComponent>
+            </TouchableOpacity>
           );
         })}
       </View>
@@ -102,15 +113,7 @@ const Separator = () => <View style={styles.separator} />;
 
 const NiemoComponent = (props) => (
   <SafeAreaView style={styles.niemo}>
-    <TouchableOpacity
-      onPress={() =>
-        Alert.prompt("New Title:", "", (text) => {
-          Alert.alert(text + props.myText);
-        })
-      }
-    >
-      <Image style={styles.image} source={require("./assets/mexico.jpg")} />
-    </TouchableOpacity>
+    <Image style={styles.image} source={require("./assets/mexico.jpg")} />
     <Text style={[styles.subTitle, styles.textMedium, styles.textWhite]}>
       {props.myText}
     </Text>
