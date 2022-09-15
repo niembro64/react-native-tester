@@ -9,8 +9,6 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-// import axios from "axios";
-// const baseUrl = "https://reqres.in";
 
 const App = () => {
   const [fetchData, setFetchData] = useState({});
@@ -25,16 +23,16 @@ const App = () => {
     niemos.pop();
     setNiemosIterator(niemosIterator - 1 < 65 ? 65 : niemosIterator - 1);
   };
+
   const onClickHandlerMore = () => {
     goForFetch();
   };
 
-  goForFetch = () => {
+  const goForFetch = () => {
     setFetchData({
       fromFetch: true,
       loading: true,
     });
-    // fetch("https://jsonplaceholder.typicode.com/users")
     fetch("https://catfact.ninja/fact")
       .then((response) => response.json())
       .then((responseJson) => {
@@ -51,14 +49,6 @@ const App = () => {
       })
       .catch((error) => console.log(error));
   };
-
-  // Passing configuration object to axios
-  // axios({
-  //   method: "get",
-  //   url: `${baseUrl}/api/users/1`,
-  // }).then((response) => {
-  //   console.log(response.data);
-  // });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -143,12 +133,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     marginVertical: 5,
+    color: "#000000",
   },
   buttons: {
-    // position: "absolute",
-    // left: 0,
-    // right: 0,
-    // bottom: 0,
     width: 350,
     padding: 5,
     borderWidth: 0,
@@ -165,9 +152,9 @@ const styles = StyleSheet.create({
   buttonLeft: {
     fontWeight: "bold",
     borderWidth: 10,
-    borderColor: "#0000ff",
-    color: "#0000ff",
-    backgroundColor: "#0000ff77",
+    borderColor: "#000099",
+    color: "#000099",
+    backgroundColor: "#555599",
     borderRadius: 20,
     paddingHorizontal: 60,
     paddingVertical: 10,
@@ -175,8 +162,8 @@ const styles = StyleSheet.create({
   buttonRight: {
     fontWeight: "bold",
     borderWidth: 10,
-    borderColor: "#ff0000",
-    backgroundColor: "#ff000077",
+    borderColor: "#990000",
+    backgroundColor: "#995555",
     borderRadius: 20,
     paddingHorizontal: 60,
     paddingVertical: 10,
@@ -204,10 +191,6 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     margin: 5,
     padding: 10,
-    // paddingTop: 5,
-    // paddingBottom: 5,
-    // paddingRight: 5,
-    // paddingLeft: 5,
     borderColor: "#00ff00",
     backgroundColor: "#00ff0033",
     borderRadius: 20,
