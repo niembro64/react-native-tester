@@ -44,7 +44,7 @@ const App = () => {
   };
 
   const onClickNiemo = (k) => {
-    Alert.prompt(niemos[k].name, "New Title:", [
+    Alert.prompt(niemos[k].name, niemos[k].fact + "\n" + "\n" + "New Title:", [
       { text: "✖", onPress: () => {} },
       {
         text: "✔",
@@ -62,9 +62,7 @@ const App = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={[styles.title, styles.textBig, styles.textWhite]}>
-        Niemo's Cat Facts
-      </Text>
+      <Text style={[styles.title, styles.textBig]}>Niemo's Cat Facts</Text>
       <View style={styles.niemoContainer}>
         {niemos.map((n, k) => {
           return (
@@ -134,7 +132,8 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     height: "100%",
-    backgroundColor: "#123",
+    backgroundColor: "#fff",
+    // backgroundColor: "#123",
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
