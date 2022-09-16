@@ -6,10 +6,7 @@ import {
   Alert,
   Image,
   TouchableOpacity,
-  Animated,
   Text,
-  Dimensions,
-  Button,
 } from "react-native";
 
 const App = () => {
@@ -33,8 +30,6 @@ const App = () => {
     fetch("https://catfact.ninja/fact")
       .then((response) => response.json())
       .then((responseJson) => {
-        // console.log("getting data from fetch", responseJson);
-        // setFetchData(responseJson);
         setNiemos([
           ...niemos,
           {
@@ -63,24 +58,10 @@ const App = () => {
     ]);
   };
 
-  myFadeInView = new FadeInView();
+  // myFadeInView = new FadeInView();
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <FadeInView
-          style={{ backgroundColor: "powderblue" }}
-          ref={(ani) => (myFadeInView.fade = ani)}
-        >
-          <Text style={{ fontSize: 28, textAlign: "center", margin: 10 }}>
-            Fading in
-          </Text>
-        </FadeInView>
-        <Button
-          title="go animate"
-          onPress={() => myFadeInView.animatebutton()}
-        />
-      </View>
       <Text style={[styles.title, styles.textBig, styles.textWhite]}>
         Niemo's Cat Facts
       </Text>
@@ -196,7 +177,6 @@ const styles = StyleSheet.create({
   },
   button: {
     fontWeight: "bold",
-    // borderWidth: 5,
     borderRadius: 40,
     paddingHorizontal: 60,
     paddingVertical: 10,
@@ -207,26 +187,20 @@ const styles = StyleSheet.create({
     marginVertical: 5,
   },
   buttonLeft: {
-    // borderColor: "#000099",
     backgroundColor: "#555599",
   },
   buttonRight: {
-    // borderColor: "#990000",
     backgroundColor: "#995555",
   },
   image: {
     resizeMode: "contain",
     width: 70,
     height: 70,
-    // borderWidth: 10,
-    // borderColor: "#00000033",
     borderRadius: 40,
-    // marginVertical: 5,
     margin: 10,
   },
   niemoContainer: {
     borderWidth: 0,
-    // backgroundColor: "#555",
     borderRadius: 10,
     flexDirection: "row",
     flexWrap: "wrap",
@@ -235,12 +209,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   niemo: {
-    // borderWidth: 3,
-    // borderColor: "#009900",
     backgroundColor: "#114433",
     maxWidth: 150,
     margin: 5,
-    // padding: 10,
     borderRadius: 20,
     display: "flex",
     justifyContent: "center",
@@ -258,53 +229,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
 });
-
-const screenwidth = Dimensions.get("screen").width;
-const screenheight = Dimensions.get("screen").height;
-class FadeInView extends React.Component {
-  state = {
-    fadeAnim: new Animated.Value(50), // Initial value for opacity: 0
-    fadeAnim2: new Animated.Value(50),
-  };
-
-  componentDidMount() {}
-
-  animatebutton() {
-    Animated.timing(
-      // Animate over time
-      this.state.fadeAnim, // The animated value to drive
-      {
-        toValue: screenheight, // Animate to opacity: 1 (opaque)
-        duration: 10000, // Make it take a while
-        useNativeDriver: true, // <-- Add this
-      }
-    ).start();
-    Animated.timing(
-      // Animate over time
-      this.state.fadeAnim2, // The animated value to drive
-      {
-        toValue: screenwidth, // Animate to opacity: 1 (opaque)
-        duration: 10000, // Make it take a while
-        useNativeDriver: true, // <-- Add this
-      }
-    ).start(); // Starts the animation
-  }
-
-  render() {
-    let { fadeAnim, fadeAnim2 } = this.state;
-
-    return (
-      <Animated.View // Special animatable View
-        style={{
-          ...this.props.style,
-          height: fadeAnim,
-          width: fadeAnim2, // Bind opacity to animated value
-        }}
-      >
-        {this.props.children}
-      </Animated.View>
-    );
-  }
-}
 
 export default App;
