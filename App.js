@@ -1,3 +1,4 @@
+// /assets/loop.wav
 import React, { Component, useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -8,6 +9,11 @@ import {
   TouchableOpacity,
   Text,
 } from "react-native";
+import { Audio } from "expo-av";
+
+const buttonColor = ["red"];
+
+const xy = [require("./assets/boop.wav")];
 
 const App = () => {
   const [niemosIterator, setNiemosIterator] = useState(68);
@@ -44,6 +50,7 @@ const App = () => {
   };
 
   const onClickNiemo = (k) => {
+    handlePlaySound();
     Alert.prompt(niemos[k].name, niemos[k].fact + "\n" + "\n" + "New Title:", [
       { text: "✖", onPress: () => {} },
       {
@@ -58,7 +65,30 @@ const App = () => {
     ]);
   };
 
-  // myFadeInView = new FadeInView();
+  handlePlaySound = async () => {
+    const soundObj = new Audio.Sound();
+
+    console.log("--------------------XXX");
+
+    try {
+      let source = "loop.wav";
+      // let source = "./assets/loop.wav";
+      await soundObj.loadAsync(source);
+      await soundObj
+        .playAsync()
+        .then(async (playbackStatus) => {
+          setTimeout(() => {
+            soundObj.unloadAsync();
+          }),
+            1000;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -130,7 +160,7 @@ const NiemoComponent = (props) => (
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
+    flex: 1,
     height: "100%",
     backgroundColor: "#fff",
     // backgroundColor: "#123",
