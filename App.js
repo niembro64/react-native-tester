@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, SafeAreaView, Dimensions } from 'react-native';
+import { Dimensions, SafeAreaView, StatusBar, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 
 const { width, height } = Dimensions.get('window');
@@ -8,13 +8,16 @@ const heightNew = height;
 const widthNew = (height * 16) / 9;
 
 export default function App() {
+  const url = 'https://smashed.niembro64.com';
+  // const url = 'file:///smashed_build/index.html';
+
   return (
-    <SafeAreaView style={styles.container}>
-      <WebView
-        source={{ uri: 'https://smashed.niembro64.com' }}
-        style={styles.webview}
-      />
-    </SafeAreaView>
+    <>
+      <StatusBar hidden={true} />
+      <SafeAreaView style={styles.container}>
+        <WebView source={{ uri: url }} style={styles.webview} />
+      </SafeAreaView>
+    </>
   );
 }
 
@@ -25,9 +28,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'black',
     // backgroundColor: '#F5FCFF',
+    padding: 0,
+    margin: 0,
   },
   webview: {
     width: widthNew,
     height: heightNew,
+    padding: 0,
+    margin: 0,
   },
 });
