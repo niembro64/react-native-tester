@@ -1,10 +1,10 @@
 {
   "expo": {
+    "orientation": "landscape",
     "owner": "niembro64",
     "name": "react-native-tester",
     "slug": "react-native-tester",
     "version": "1.0.0",
-    "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
